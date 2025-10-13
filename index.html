@@ -16,36 +16,27 @@
 
   <!-- Local self-hosted Baazar font (regular/bold/black) -->
   <!-- Put BaazarRegular.ttf, BaazarBold.ttf, BaazarBlack.ttf next to this HTML file -->
-  <link rel="preload" href="./BaazarRegular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="./BaazarBold.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="preload" href="./BaazarBlack.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="./Vazir.ttf" as="font" type="font/ttf" crossorigin>
 
   <style>
     /* ----------------------------- */
     /* Self-hosted Baazar font */
     /* ----------------------------- */
     @font-face {
-      font-family: 'Baazar';
-      src: url('./BaazarRegular.ttf') format('truetype');
+      font-family: 'Vazir';
+      src: url('./Vazir.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
-      font-family: 'Baazar';
+      font-family: 'Bazaar';
       src: url('./BaazarBold.ttf') format('truetype');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Baazar';
-      src: url('./BaazarBlack.ttf') format('truetype');
       font-weight: 900;
       font-style: normal;
       font-display: swap;
     }
-
     :root{
       --glass-bg-color: rgba(255,255,255,0.08);
       --glass-border-color: rgba(255,255,255,0.15);
@@ -56,7 +47,7 @@
     main{ position:relative; z-index:1; }
 
     body{
-      font-family: 'Baazar', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", sans-serif;
+      font-family: 'Vazir', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji", sans-serif;
       background-color: var(--dark-base);
       color: #fff;
       min-height:100vh;
@@ -182,8 +173,8 @@
 
       <header class="mb-8">
         <img 
-          src="https://media1.maktabkhooneh.org/avatars/2025-08-22_164520.209424_1941.png" 
-          alt="امین مرغوب - مدرس هوش مصنوعی"
+          src="./pp1.png" 
+          alt="امین مرغوب - مدرس و مشاور هوش مصنوعی"
           class="w-28 h-28 rounded-full object-cover mx-auto mb-4 shadow-xl ring-2 ring-white/20"
           onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/ffffff?text=AM';"
         >
@@ -192,9 +183,9 @@
       </header>
 
       <section class="course-links-scroll flex flex-col space-y-4 pb-1">
-        <a href="#link1" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">دوره جامع یادگیری عمیق (Deep Learning)</a>
+        <a href="https://mktb.me/qzbo/" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">آموزش پرامپت نویسی ChatGPT</a>
         <a href="#link2" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">کارگاه عملی هوش مصنوعی برای کسب و کارها</a>
-        <a href="#link3" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">وبینار رایگان: مسیر شغلی در دنیای دیتا ساینس</a>
+        <a href="https://www.aparat.com/v/rddavc1" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">وبینار رایگان: رویداد ابزار هوش مصنوعی در سومین دوره iAAA</a>
         <a href="#link-extra-1" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">لینک آزمایشی دوره (۱)</a>
         <a href="#link-extra-2" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">لینک آزمایشی دوره (۲)</a>
         <a href="#link-extra-3" target="_blank" class="glass-button p-4 rounded-xl font-semibold text-white text-base hover:shadow-xl block">لینک آزمایشی دوره (۳)</a>
