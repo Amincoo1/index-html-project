@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نقشه راه اپلیکیشن سودده با هوش مصنوعی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #F8F9FA;
+            color: #073B4C;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 640px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .step-arrow {
+            color: #FFD166;
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-5px);
+        }
+        .tool-link {
+            display: inline-block;
+            background-color: #118AB2;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .tool-link:hover {
+            background-color: #073B4C;
+        }
+        .kpi {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #06D6A0;
+        }
+        .kpi-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #118AB2;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white shadow-md">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold" style="color: #118AB2;">نقشه راه اپلیکیشن سودده با AI</h1>
+            <p class="mt-4 text-xl font-light" style="color: #073B4C;">برنامه جامع ۱۴ روزه شما برای ساخت اولین محصول (بدون کدنویسی)</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">فاز ۱: کشف و اعتبارسنجی (روز ۱-۲)</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-8">
+                موفقیت با یک ایده ناب شروع نمی‌شود، بلکه با پیدا کردن یک "مشکل واقعی" که مردم حاضرند برای حل آن پول بپردازند، آغاز می‌شود. ما از ۵ ایده شروع کرده و به ۱ ایده معتبر می‌رسیم.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card lg:col-span-1">
+                    <h3 class="text-2xl font-semibold mb-3">۱. شکار ایده (روز ۱-۲)</h3>
+                    <p class="mb-4">به جای ساخت، "جستجو" کنید. اپ‌هایی را پیدا کنید که در حال حاضر درآمد دارند.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://producthunt.com" target="_blank" class="tool-link">ProductHunt</a>
+                        <a href="https://twitter.com" target="_blank" class="tool-link">Twitter/X</a>
+                        <a href="https://reddit.com" target="_blank" class="tool-link">Reddit</a>
+                        <a href="https://indiehackers.com" target="_blank" class="tool-link">IndieHackers</a>
+                    </div>
+                </div>
+                
+                <div class="card lg:col-span-1">
+                    <h3 class="text-2xl font-semibold mb-3">۲. بررسی تقاضا (روز ۲)</h3>
+                    <p class="mb-4">ترافیک و رفتار کاربران رقبا را تحلیل کنید. آیا رشد می‌کنند یا ثابت هستند؟</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://similarweb.com" target="_blank" class="tool-link">SimilarWeb</a>
+                        <a href="https://builtwith.com" target="_blank" class="tool-link">BuiltWith</a>
+                        <a href="https://semrush.com" target="_blank" class="tool-link">Semrush</a>
+                        <a href="https://trends.google.com" target="_blank" class="tool-link">Google Trends</a>
+                    </div>
+                </div>
+
+                <div class="card lg:col-span-1">
+                    <h3 class="text-2xl font-semibold mb-3">قیف اعتبارسنجی ایده</h3>
+                    <p class="mb-4">این نمودار نشان می‌دهد که چگونه از بین ایده‌های اولیه، تنها یک ایده برای اجرا انتخاب می‌شود.</p>
+                    <div class="chart-container" style="height: 280px; max-height: 300px;">
+                        <canvas id="ideaFunnelChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">فاز ۲: استراتژی و معماری (روز ۳-۴)</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-8">
+                لازم نیست چرخ را از نو اختراع کنید. فقط یک بخش کوچک از محصول رقیب را انتخاب کنید و آن را ۱٪ بهتر کنید. سپس، نقشه ساخت آن را با کمک هوش مصنوعی طراحی کنید.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۳. مدل ۱٪ بهتر (روز ۳)</h3>
+                    <p class="mb-4">نمودار زیر مقایسه یک اپ ۱٪ بهتر را در مقابل رقیب موجود در ۴ معیار کلیدی نشان می‌دهد: سرعت، سادگی، ادغام‌پذیری و قیمت.</p>
+                    <div class="chart-container">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۴. ساخت PRD با AI (روز ۴)</h3>
+                    <p class="mb-4">"سند الزامات محصول" (PRD) نقشه راه فنی شماست. هوش مصنوعی آن را برای شما می‌نویسد.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">خروجی PRD شامل:</span>
+                    <ul class="list-disc list-inside mt-2 space-y-1">
+                        <li>مشکل بازار و راه‌حل</li>
+                        <li>جریان کاربر (User Flow)</li>
+                        <li>ویژگی‌های کلیدی (MVP)</li>
+                        <li>APIهای لازم و طرح دیتابیس</li>
+                    </ul>
+                    <span class="text-lg font-semibold mt-4" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://claude.ai" target="_blank" class="tool-link">Claude</a>
+                        <a href="https://chatgpt.com" target="_blank" class="tool-link">ChatGPT</a>
+                        <a href="https://perplexity.ai" target="_blank" class="tool-link">Perplexity</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">فاز ۳: ساخت و تست (روز ۵-۱۱)</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-8">
+                اکنون زمان تبدیل PRD به یک محصول واقعی است. ما از ابزارهای No-Code و AI-First برای ساخت، پولیش و تست سریع نسخه اولیه استفاده می‌کنیم.
+            </p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4 md:rtl:space-x-reverse mb-8">
+                <div class="card text-center p-4 md:p-6 flex-1">
+                    <h4 class="text-xl font-semibold">PRD (سند)</h4>
+                </div>
+                <span class="step-arrow rtl:rotate-180">→</span>
+                <div class="card text-center p-4 md:p-6 flex-1" style="border-color: #06D6A0; border-width: 2px;">
+                    <h4 class="text-xl font-semibold">ابزارهای ساخت (Bolt/Replit)</h4>
+                </div>
+                <span class="step-arrow rtl:rotate-180">→</span>
+                <div class="card text-center p-4 md:p-6 flex-1">
+                    <h4 class="text-xl font-semibold">MVP (نسخه اولیه)</h4>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۵. ساخت MVP (روز ۵-۸)</h3>
+                    <p class="mb-4">PRD را به ابزارهای هوش مصنوعی بدهید تا نسخه اولیه اپلیکیشن شما را بسازند.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://bolt.new" target="_blank" class="tool-link">Bolt.new</a>
+                        <a href="https://lovable.dev" target="_blank" class="tool-link">Lovable</a>
+                        <a href="https://replit.com" target="_blank" class="tool-link">Replit Agent</a>
+                        <a href="https://v0.dev" target="_blank" class="tool-link">v0.dev (UI)</a>
+                        <a href="https://supabase.com" target="_blank" class="tool-link">Supabase (Backend)</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۶. پولیش و تکمیل (روز ۹-۱۰)</h3>
+                    <p class="mb-4">کد را دانلود کرده و باگ‌ها را رفع کنید. لاگین و ۱٪ برتری خود را اضافه کنید.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">ابزار اصلی:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://cursor.com" target="_blank" class="tool-link">Cursor</a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۷. تست سریع (روز ۱۱)</h3>
+                    <p class="mb-4">لینک را به ۲۰ کاربر واقعی بدهید و ۳ سوال کلیدی بپرسید:</p>
+                    <ul class="list-decimal list-inside mt-2 space-y-1 font-medium">
+                        <li>چه چیزی اذیتت کرد؟</li>
+                        <li>چه چیزی باید بهتر شود؟</li>
+                        <li>حاضر بودی برای چه چیزی پول بدهی؟</li>
+                    </ul>
+                    <span class="text-lg font-semibold mt-4" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://tally.so" target="_blank" class="tool-link">Tally</a>
+                        <a href="https://loom.com" target="_blank" class="tool-link">Loom</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">فاز ۴: لانچ و رشد (روز ۱۲-۱۴ به بعد)</h2>
+            <p class="text-lg text-center max-w-3xl mx-auto mb-8">
+                محصول آماده فروش است. درگاه پرداخت را متصل می‌کنیم، در پلتفرم‌های کلیدی لانچ می‌کنیم و مسیر رشد درآمد ماهانه (MRR) را آغاز می‌کنیم.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۸. افزودن پرداخت (روز ۱۲)</h3>
+                    <p class="mb-4">از سرویس‌های (Merchant of Record) برای مدیریت آسان مالیات جهانی استفاده کنید.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">ابزارها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://lemonsqueezy.com" target="_blank" class="tool-link">Lemon Squeezy</a>
+                        <a href="https://stripe.com" target="_blank" class="tool-link">Stripe</a>
+                        <a href="https://paddle.com" target="_blank" class="tool-link">Paddle</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3">۹. لانچ (روز ۱۳)</h3>
+                    <p class="mb-4">محصول خود را در جوامع فعال معرفی کنید. استراتژی "ساخت در ملأ عام" را فراموش نکنید.</p>
+                    <span class="text-lg font-semibold" style="color: #118AB2;">بهترین پلتفرم‌ها:</span>
+                    <div class="flex flex-wrap mt-2">
+                        <a href="https://producthunt.com" target="_blank" class="tool-link">ProductHunt</a>
+                        <a href="https://news.ycombinator.com" target="_blank" class="tool-link">Hacker News</a>
+                        <a href="https://twitter.com" target="_blank" class="tool-link">Twitter/X</a>
+                        <a href="https://betalist.com" target="_blank" class="tool-link">Betalist</a>
+                    </div>
+                </div>
+
+                <div class="card md:col-span-2 lg:col-span-1">
+                    <h3 class="text-2xl font-semibold mb-3">۱۰. رشد MRR (روز ۱۴+)</h3>
+                    <p class="mb-4">هدف، رسیدن به ۵۰۰ تا ۲۰۰۰ دلار درآمد ماهانه (MRR) است. این نمودار، مسیر رشد پیش‌بینی شده را نشان می‌دهد.</p>
+                    <div class="chart-container" style="height: 280px; max-height: 300px;">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-3xl font-bold text-center mb-4">💡 نکات طلایی موفقیت</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="card text-center" style="border-color: #FF6B6B; border-width: 2px;">
+                    <span class="text-5xl">🚫</span>
+                    <h3 class="text-2xl font-semibold my-3">قانون حذف ویژگی</h3>
+                    <p>اگر شک دارید که یک ویژگی لازم است یا نه، آن را **حذف** کنید. MVP باید ساده باشد.</p>
+                </div>
+                <div class="card text-center" style="border-color: #06D6A0; border-width: 2px;">
+                    <span class="text-5xl">💬</span>
+                    <h3 class="text-2xl font-semibold my-3">پشتیبانی یعنی فروش</h3>
+                    <p>در روزهای اول، خودتان پشتیبانی مشتری را انجام دهید. این بهترین راه برای فهمیدن باگ‌هاست.</p>
+                </div>
+                <div class="card text-center" style="border-color: #FFD166; border-width: 2px;">
+                    <span class="text-5xl">🛠️</span>
+                    <h3 class="text-2xl font-semibold my-3">دام ابزار</h3>
+                    <p>وسواس به خرج ندهید. یکی را انتخاب کنید و بسازید. ابزار مهم نیست، محصول نهایی مهم است.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white mt-12 py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm" style="color: #073B4C;">هدیه ای کوچک از طرف امین مرغوب❤️</p>
+        </div>
+    </footer>
+
+    <!-- Confirmation: NEITHER Mermaid JS NOR SVG were used in this file. -->
+
+    <script>
+        window.onload = function() {
+
+            const sharedTooltipCallback = {
+                title: function(tooltipItems) {
+                    const item = tooltipItems[0];
+                    let label = item.chart.data.labels[item.dataIndex];
+                    if (Array.isArray(label)) {
+                        return label.join(' ');
+                    } else {
+                        return label;
+                    }
+                }
+            };
+
+            const ideaFunnelCtx = document.getElementById('ideaFunnelChart').getContext('2d');
+            new Chart(ideaFunnelCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        ['ایده‌های', 'بررسی شده'], 
+                        'ایده نهایی'
+                    ],
+                    datasets: [{
+                        data: [4, 1],
+                        backgroundColor: [
+                            '#FFD166',
+                            '#06D6A0'
+                        ],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: sharedTooltipCallback
+                        }
+                    }
+                }
+            });
+
+            const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
+            new Chart(comparisonCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['سرعت', 'سادگی', 'ادغام', 'قیمت'],
+                    datasets: [
+                        {
+                            label: 'رقیب',
+                            data: [5, 6, 4, 7],
+                            backgroundColor: '#FF6B6B',
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'اپ ۱٪ بهتر شما',
+                            data: [7, 8, 5, 6],
+                            backgroundColor: '#118AB2',
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: sharedTooltipCallback
+                        }
+                    }
+                }
+            });
+
+            const growthCtx = document.getElementById('growthChart').getContext('2d');
+            new Chart(growthCtx, {
+                type: 'line',
+                data: {
+                    labels: ['روز ۱۴', 'روز ۳۰', 'روز ۴۵', 'روز ۶۰'],
+                    datasets: [{
+                        label: 'درآمد ماهانه (MRR)',
+                        data: [0, 500, 1200, 2000],
+                        borderColor: '#06D6A0',
+                        backgroundColor: 'rgba(6, 214, 160, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        pointBackgroundColor: '#06D6A0',
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: 'Vazirmatn'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: sharedTooltipCallback
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+
+</body>
+</html>
