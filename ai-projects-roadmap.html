@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نقشه راه درآمدزایی با هوش مصنوعی</title>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Vazir Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #6366f1;
+            border-radius: 4px;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glow-text {
+            text-shadow: 0 0 15px rgba(99, 102, 241, 0.6);
+        }
+
+        .step-line {
+            position: absolute;
+            right: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #6366f1, #a855f7, #ec4899);
+            z-index: 0;
+        }
+
+        /* Fixed Background Animation */
+        .fixed-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .tool-link:hover i {
+            transform: translate(-2px, -2px);
+        }
+
+        @media (max-width: 768px) {
+            .step-line {
+                right: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Background Elements -->
+    <div class="fixed-bg">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full mix-blend-screen filter blur-3xl animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-pink-600/20 rounded-full mix-blend-screen filter blur-3xl animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Enhanced Data with Links and Action Plans
+        const roadmapData = [
+            {
+                id: 1,
+                title: "ساخت GPT اختصاصی",
+                icon: "fa-robot",
+                category: "مهندسی پرامپت",
+                description: "دانش خودت، خصوصیاتت و علاقه‌مندی‌هات رو تبدیل به یک دستیار هوشمند کن که مثل خودت فکر می‌کنه.",
+                details: "ساخت یک «Persona» دیجیتال. یاد می‌گیری چطور دیتای شخصی به مدل بدی (Knowledge Base) و خروجی رو با دستورالعمل‌های خاص (Custom Instructions) کنترل کنی.",
+                actionPlan: [
+                    "ثبت نام در پلتفرم هوش مصنوعی",
+                    "نوشتن فایل متنی شامل رزومه و علایق خودت",
+                    "آپلود فایل در بخش Knowledge Base",
+                    "تست و اصلاح نحوه پاسخگویی ربات"
+                ],
+                tools: [
+                    { name: "Google AI Studio", url: "https://aistudio.google.com/", isFree: true, desc: "دسترسی رایگان به Gemini Pro" },
+                    { name: "HuggingChat", url: "https://huggingface.co/chat/", isFree: true, desc: "مدل‌های متن‌باز رایگان" },
+                    { name: "ChatGPT (Free)", url: "https://chat.openai.com/", isFree: true, desc: "نسخه پایه رایگان" },
+                    { name: "Poe", url: "https://poe.com/", isFree: true, desc: "ساخت بات‌های شخصی" }
+                ],
+                color: "text-blue-400",
+                bg: "bg-blue-500/10",
+                border: "border-blue-500/50"
+            },
+            {
+                id: 2,
+                title: "تولید ویدئوی تبلیغاتی AI",
+                icon: "fa-film",
+                category: "تولید محتوا چندرسانه‌ای",
+                description: "ساخت صدا، تصویرسازی، متحرک‌سازی و ادیت. همه مهارت‌های یک استودیو فیلم‌سازی در یک پروژه.",
+                details: "یاد می‌گیری سناریو بنویسی (Scripting)، تصاویر ثابت رو متحرک کنی (Image-to-Video) و صداگذاری کنی (TTS) تا یک تیزر کامل بسازی.",
+                actionPlan: [
+                    "نوشتن سناریو با هوش مصنوعی متنی",
+                    "تولید تصاویر کاراکترها و محیط",
+                    "متحرک‌سازی تصاویر",
+                    "تولید نریشن و تدوین نهایی"
+                ],
+                tools: [
+                    { name: "Leonardo.ai", url: "https://leonardo.ai/", isFree: true, desc: "تولید تصویر (کردیت روزانه رایگان)" },
+                    { name: "Haiper AI", url: "https://haiper.ai/", isFree: true, desc: "ساخت ویدیو کوتاه رایگان" },
+                    { name: "ElevenLabs", url: "https://elevenlabs.io/", isFree: true, desc: "تولید صدا (پلن رایگان محدود)" },
+                    { name: "CapCut", url: "https://www.capcut.com/", isFree: true, desc: "تدوین ویدیو (رایگان)" }
+                ],
+                color: "text-purple-400",
+                bg: "bg-purple-500/10",
+                border: "border-purple-500/50"
+            },
+            {
+                id: 3,
+                title: "ساخت Pitch Deck حرفه‌ای",
+                icon: "fa-chart-pie",
+                category: "استراتژی بیزینس",
+                description: "نوشتن بیزینس پلن، تحقیق بازار، جدول مالی و تولید یک ارائه متقاعدکننده.",
+                details: "تبدیل ایده خام به یک طرح کسب‌وکار قابل سرمایه‌گذاری. هوش مصنوعی در نقش مشاور مالی و طراح گرافیک تو عمل می‌کنه.",
+                actionPlan: [
+                    "تحقیق بازار و رقبا با AI",
+                    "تولید ساختار اسلایدها (Outline)",
+                    "طراحی بصری اسلایدها",
+                    "آماده‌سازی متن سخنرانی"
+                ],
+                tools: [
+                    { name: "Gamma", url: "https://gamma.app/", isFree: true, desc: "ساخت اسلاید (کردیت اولیه رایگان)" },
+                    { name: "Canva", url: "https://www.canva.com/", isFree: true, desc: "طراحی گرافیک (بخش‌های رایگان)" },
+                    { name: "Google Sheets", url: "https://docs.google.com/spreadsheets/", isFree: true, desc: "تحلیل داده‌ها" },
+                    { name: "Perplexity", url: "https://www.perplexity.ai/", isFree: true, desc: "موتور جستجو هوشمند برای تحقیق" }
+                ],
+                color: "text-green-400",
+                bg: "bg-green-500/10",
+                border: "border-green-500/50"
+            },
+            {
+                id: 4,
+                title: "ساخت صفحه دمو محصول",
+                icon: "fa-laptop-code",
+                category: "برنامه‌نویسی مدرن",
+                description: "طراحی UI، نوشتن Backend و Vibe Coding برای نمایش محصول.",
+                details: "با رویکرد Vibe Coding، تو فقط منطق و ظاهر رو توصیف می‌کنی و هوش مصنوعی کد رو می‌نویسه. هدف: یک Landing Page تعاملی.",
+                actionPlan: [
+                    "توصیف ظاهر سایت برای AI",
+                    "دریافت کد HTML/CSS/JS",
+                    "تست و اصلاح با چت کردن",
+                    "انتشار آنلاین (Deploy)"
+                ],
+                tools: [
+                    { name: "V0.dev", url: "https://v0.dev/", isFree: true, desc: "تولید رابط کاربری (React/Tailwind)" },
+                    { name: "Replit", url: "https://replit.com/", isFree: true, desc: "کدنویسی و هاستینگ رایگان" },
+                    { name: "Figma", url: "https://www.figma.com/", isFree: true, desc: "طراحی اولیه (پلن رایگان)" },
+                    { name: "GitHub Pages", url: "https://pages.github.com/", isFree: true, desc: "هاست رایگان وب‌سایت" }
+                ],
+                color: "text-orange-400",
+                bg: "bg-orange-500/10",
+                border: "border-orange-500/50"
+            },
+            {
+                id: 5,
+                title: "اتوماسیون تولید محتوا",
+                icon: "fa-infinity",
+                category: "مارکتینگ خودکار",
+                description: "لحن برندت رو بده به AI... کپشن، ایمیل، انتشار محتوا... همه‌اش رو خودکار کن.",
+                details: "ساخت خط تولید محتوا (Pipeline). وقتی ایده رو وارد می‌کنی، سیستم خودکار متن، عکس و پست شبکه اجتماعی رو می‌سازه.",
+                actionPlan: [
+                    "انتخاب پلتفرم اتوماسیون",
+                    "اتصل اکانت‌های سوشال مدیا",
+                    "تعریف سناریو (Trigger -> Action)",
+                    "تست گردش کار"
+                ],
+                tools: [
+                    { name: "Make.com", url: "https://www.make.com/", isFree: true, desc: "اتوماسیون (پلن رایگان قوی)" },
+                    { name: "Buffer", url: "https://buffer.com/", isFree: true, desc: "زمان‌بندی پست (پلن رایگان)" },
+                    { name: "Zapier", url: "https://zapier.com/", isFree: true, desc: "اتوماسیون (پلن رایگان محدود)" },
+                    { name: "Notion", url: "https://www.notion.so/", isFree: true, desc: "مدیریت محتوا و تقویم" }
+                ],
+                color: "text-pink-400",
+                bg: "bg-pink-500/10",
+                border: "border-pink-500/50"
+            }
+        ];
+
+        const App = () => {
+            const [completedSteps, setCompletedSteps] = useState([]);
+            const [expandedStep, setExpandedStep] = useState(null);
+
+            const toggleComplete = (id) => {
+                if (completedSteps.includes(id)) {
+                    setCompletedSteps(completedSteps.filter(stepId => stepId !== id));
+                } else {
+                    setCompletedSteps([...completedSteps, id]);
+                }
+            };
+
+            const toggleExpand = (id) => {
+                setExpandedStep(expandedStep === id ? null : id);
+            };
+
+            const progress = (completedSteps.length / roadmapData.length) * 100;
+
+            return (
+                <div className="relative z-10 min-h-screen pb-20">
+                    {/* Header Section */}
+                    <header className="relative pt-20 pb-32 px-4 text-center">
+                        <h1 className="text-4xl md:text-7xl font-bold mb-6 glow-text text-white leading-tight">
+                            مدرک دانشگاهت رو <span className="text-red-500 inline-block transform hover:scale-105 transition-transform">قاب کن</span>
+                        </h1>
+                        <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-12 font-light leading-relaxed">
+                            پول واقعی در انجام پروژه است، نه جمع کردن مدرک.
+                            <br/>
+                            <span className="text-indigo-400 font-bold mt-3 block text-lg bg-indigo-900/30 w-fit mx-auto px-4 py-1 rounded-full border border-indigo-500/30">
+                                ۵ پروژه حیاتی برای تغییر مسیر شغلی شما
+                            </span>
+                        </p>
+
+                        {/* Amin Marghoub Gift Card */}
+                        <div className="max-w-md mx-auto glass-panel rounded-2xl overflow-hidden shadow-2xl border-t border-white/10 flex flex-row items-stretch transition-transform hover:scale-[1.02] duration-300 group cursor-default text-right">
+                            {/* Image Section */}
+                            <div className="w-1/3 min-h-[160px] relative">
+                                <img 
+                                    src="amin.png" 
+                                    alt="Amin Marghoub" 
+                                    className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-110"
+                                    onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        e.target.parentElement.classList.add('bg-gray-800', 'flex', 'items-center', 'justify-center');
+                                        e.target.parentElement.innerHTML = '<div class="text-center"><i class="fas fa-image text-gray-600 text-2xl mb-1"></i><br><span class="text-[10px] text-gray-500">amin.png<br>9:16</span></div>';
+                                    }}
+                                />
+                            </div>
+
+                            {/* Text Section */}
+                            <div className="w-2/3 p-5 flex flex-col justify-center bg-gradient-to-l from-slate-800/50 to-transparent">
+                                <p className="text-gray-300 text-sm md:text-base mb-3 font-medium flex items-center gap-1 flex-wrap">
+                                    هدیه ای از طرف 
+                                    <span className="font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 drop-shadow-sm">
+                                        امین مرغوب ❤️
+                                    </span>
+                                </p>
+                                <a 
+                                    href="https://instagram.com/aminmarghoub" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-gray-300 font-mono text-sm hover:text-white transition-colors flex items-center gap-2 bg-white/5 w-fit px-3 py-2 rounded-lg border border-white/10 hover:bg-pink-600/20 hover:border-pink-500/50 group/btn"
+                                >
+                                    <i className="fab fa-instagram text-xl text-pink-500 group-hover/btn:scale-110 transition-transform"></i>
+                                    <span dir="ltr" className="pt-0.5">@aminmarghoub</span>
+                                </a>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Roadmap Section */}
+                    <div className="max-w-5xl mx-auto px-4 relative">
+                        {/* Connecting Line */}
+                        <div className="step-line hidden md:block" style={{ right: '50%', transform: 'translateX(50%)' }}></div>
+                        <div className="step-line md:hidden" style={{ right: '2rem' }}></div>
+
+                        <div className="space-y-16">
+                            {roadmapData.map((item, index) => {
+                                const isCompleted = completedSteps.includes(item.id);
+                                const isExpanded = expandedStep === item.id;
+                                const isEven = index % 2 === 0;
+
+                                return (
+                                    <div key={item.id} className={`relative flex flex-col md:flex-row items-start ${isEven ? 'md:flex-row-reverse' : ''}`}>
+                                        
+                                        {/* Timeline Node (Checkmark) */}
+                                        <div className="absolute md:relative right-4 md:right-auto md:left-auto md:mx-10 z-10 mb-4 md:mb-0 mt-8 md:mt-8">
+                                            <button 
+                                                onClick={() => toggleComplete(item.id)}
+                                                className={`w-14 h-14 rounded-full flex items-center justify-center border-4 transition-all duration-300 shadow-xl ${isCompleted ? 'bg-green-500 border-green-400 scale-110 rotate-0' : 'bg-gray-800 border-gray-600 hover:border-white hover:scale-105'}`}
+                                                title={isCompleted ? "انجام شده" : "تیک بزنید"}
+                                            >
+                                                {isCompleted ? <i className="fas fa-check text-white text-xl"></i> : <span className="text-gray-400 font-bold text-lg">{item.id}</span>}
+                                            </button>
+                                        </div>
+
+                                        {/* Content Card */}
+                                        <div className={`w-full md:w-[calc(50%-4rem)] pl-12 md:pl-0 transition-all duration-500`}>
+                                            <div 
+                                                className={`glass-panel rounded-2xl p-6 md:p-8 border-l-4 cursor-pointer hover:bg-slate-800/60 transition-all group ${isExpanded ? 'ring-2 ring-offset-4 ring-offset-slate-900 ring-indigo-500/50' : ''} ${item.color} ${item.border}`}
+                                                style={{ borderColor: isCompleted ? '#22c55e' : undefined }}
+                                                onClick={() => toggleExpand(item.id)}
+                                            >
+                                                <div className="flex justify-between items-start mb-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.bg}`}>
+                                                            <i className={`fas ${item.icon} text-xl ${item.color}`}></i>
+                                                        </div>
+                                                        <span className="text-xs font-bold uppercase tracking-wider text-gray-400 bg-gray-900/80 px-2 py-1 rounded border border-gray-700">{item.category}</span>
+                                                    </div>
+                                                    <i className={`fas fa-chevron-down text-gray-500 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-white' : 'group-hover:text-gray-300'}`}></i>
+                                                </div>
+                                                
+                                                <h3 className={`text-2xl font-bold mb-3 text-white transition-colors ${isCompleted ? 'line-through text-gray-500' : ''}`}>
+                                                    {item.title}
+                                                </h3>
+                                                
+                                                <p className="text-gray-300 text-sm leading-7 mb-2">
+                                                    {item.description}
+                                                </p>
+
+                                                {/* Expanded Details */}
+                                                <div 
+                                                    onClick={(e) => e.stopPropagation()} // Prevent closing when clicking content
+                                                    className={`overflow-hidden transition-all duration-700 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100 mt-6' : 'max-h-0 opacity-0'}`}
+                                                >
+                                                    <div className="bg-slate-900/60 p-5 rounded-xl text-sm border border-white/5 space-y-6">
+                                                        
+                                                        {/* Description */}
+                                                        <div>
+                                                            <h4 className="text-indigo-300 font-bold mb-2 flex items-center gap-2">
+                                                                <i className="fas fa-info-circle"></i> توضیحات تکمیلی
+                                                            </h4>
+                                                            <p className="text-gray-400 leading-relaxed">{item.details}</p>
+                                                        </div>
+
+                                                        {/* Action Plan */}
+                                                        <div>
+                                                            <h4 className="text-green-400 font-bold mb-2 flex items-center gap-2">
+                                                                <i className="fas fa-list-check"></i> قدم‌های اجرایی
+                                                            </h4>
+                                                            <ul className="space-y-2">
+                                                                {item.actionPlan.map((step, idx) => (
+                                                                    <li key={idx} className="flex items-start gap-2 text-gray-400">
+                                                                        <span className="text-green-500/50 mt-1">▹</span>
+                                                                        <span>{step}</span>
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        </div>
+                                                        
+                                                        {/* Tools Grid */}
+                                                        <div>
+                                                            <h4 className="text-yellow-400 font-bold mb-3 flex items-center gap-2">
+                                                                <i className="fas fa-toolbox"></i> ابزارهای پیشنهادی (رایگان)
+                                                            </h4>
+                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                                {item.tools.map((tool, i) => (
+                                                                    <a 
+                                                                        key={i} 
+                                                                        href={tool.url} 
+                                                                        target="_blank" 
+                                                                        rel="noopener noreferrer"
+                                                                        className="tool-link group flex flex-col p-3 bg-slate-800/80 hover:bg-indigo-900/30 rounded-lg border border-slate-700 hover:border-indigo-500/50 transition-all text-decoration-none"
+                                                                    >
+                                                                        <div className="flex justify-between items-center mb-1">
+                                                                            <span className="font-bold text-indigo-200 text-sm group-hover:text-white transition-colors">{tool.name}</span>
+                                                                            <i className="fas fa-external-link-alt text-[10px] text-gray-500 group-hover:text-indigo-400"></i>
+                                                                        </div>
+                                                                        <span className="text-xs text-gray-500 group-hover:text-gray-400">{tool.desc}</span>
+                                                                    </a>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Footer */}
+                    <footer className="mt-32 text-center px-4 pb-10">
+                        <div className="max-w-3xl mx-auto glass-panel p-10 rounded-3xl border-t border-purple-500/50 relative overflow-hidden group hover:border-purple-400 transition-colors">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+                            
+                            <h2 className="text-3xl font-bold text-white mb-4">
+                                قدم بعدی چیست؟
+                            </h2>
+                            <p className="text-gray-300 mb-8 leading-relaxed text-lg">
+                                با تکمیل این ۵ پروژه، تو یک رزومه عملی داری که از ۱۰۰ تا مدرک معتبرتره.
+                                <br/>
+                                حالا وقتشه که نمونه‌کارهات رو توی لینکدین و گیت‌هاب منتشر کنی.
+                            </p>
+                            
+                            <button 
+                                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                                className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-10 py-4 rounded-full font-bold shadow-lg hover:shadow-purple-500/50 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center mx-auto gap-2"
+                            >
+                                <i className="fas fa-rocket"></i>
+                                شروع دوباره مسیر
+                            </button>
+                        </div>
+                        <p className="mt-8 text-gray-600 text-sm font-mono">ساخته شده با هوش مصنوعی • توسط امین مرغوب</p>
+                    </footer>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
