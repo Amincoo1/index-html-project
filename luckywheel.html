@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TastyJoyz - گردونه شانس</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Vazirmatn for Persian/Arabic, Roboto for English) -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        /* Base Styles */
+        body {
+            background: radial-gradient(circle at center, #2b1055, #7597de);
+            font-family: 'Vazirmatn', sans-serif; /* Default for FA/AR */
+            /* Full screen settings */
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Language Specific Fonts */
+        body.lang-en {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .wheel-container {
+            position: relative;
+            /* Adjusted for mobile full-screen fit */
+            width: 280px;
+            height: 280px;
+            margin: 0 auto;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5), 0 0 50px rgba(255, 215, 0, 0.2);
+            border: 8px solid #fccd2d;
+            background-color: #fff;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .stopper {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 45px;
+            z-index: 20;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+        }
+
+        .stopper::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            border-left: 17px solid transparent;
+            border-right: 17px solid transparent;
+            border-top: 35px solid #e11d48;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(to bottom, #fccd2d, #ff9f00);
+            box-shadow: 0 6px 0 #b36e00, 0 15px 20px rgba(0,0,0,0.4);
+            transition: all 0.1s;
+        }
+        .btn-primary:active {
+            transform: translateY(6px);
+            box-shadow: 0 0 0 #b36e00, 0 0 10px rgba(0,0,0,0.4);
+        }
+        .btn-primary:disabled {
+            filter: grayscale(100%);
+            cursor: not-allowed;
+            transform: translateY(6px);
+            box-shadow: none;
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        @media (min-width: 640px) {
+            .wheel-container {
+                width: 450px;
+                height: 450px;
+            }
+            .stopper {
+                top: -25px;
+                width: 40px;
+                height: 50px;
+            }
+            .stopper::after {
+                border-left: 20px solid transparent;
+                border-right: 20px solid transparent;
+                border-top: 40px solid #e11d48;
+            }
+        }
+        
+        /* Smaller screens fix */
+        @media (max-height: 700px) {
+            .wheel-container {
+                width: 250px;
+                height: 250px;
+            }
+            #mainLogo {
+                width: 8rem; /* smaller logo */
+            }
+        }
+
+        /* Checkbox Custom Style */
+        .custom-checkbox {
+            width: 1.25rem;
+            height: 1.25rem;
+            cursor: pointer;
+            accent-color: #10b981; /* Tailwind green-500 */
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Language Switcher -->
+    <div class="absolute top-4 left-4 z-50">
+        <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-white text-gray-800 border border-gray-300 rounded-lg px-2 py-1 text-sm focus:outline-none shadow-md cursor-pointer font-bold">
+            <option value="fa" selected>🇮🇷 فارسی</option>
+            <option value="en">🇺🇸 English</option>
+            <option value="ar">🇦🇪 العربية</option>
+        </select>
+    </div>
+
+    <div class="container mx-auto px-4 flex flex-col items-center justify-center h-full w-full max-w-lg space-y-4 md:space-y-8">
+        
+        <!-- Header: Logo & Subtitle -->
+        <div class="text-center text-white drop-shadow-lg flex flex-col items-center z-10 shrink-0">
+            <!-- Main Logo: Big & No Frame -->
+            <img id="mainLogo" src="logo.png" alt="Logo" class="w-40 md:w-60 mb-2 object-contain drop-shadow-2xl" onerror="this.style.display='none'">
+            
+            <!-- Removed H1 Text -->
+            <p id="subTitle" class="text-lg md:text-xl font-bold opacity-90">گردونه شانس</p>
+        </div>
+
+        <!-- SECTION 1: Verification Gate -->
+        <div id="gateSection" class="w-full glass-card rounded-2xl p-4 md:p-8 text-white space-y-4 md:space-y-6 transform transition-all duration-500 shrink-0">
+            <div class="space-y-3 md:space-y-4">
+                <!-- WhatsApp Input -->
+                <div>
+                    <label id="lblWhatsapp" for="whatsappInput" class="flex items-center gap-2 text-sm font-bold mb-2">
+                        <!-- WhatsApp Icon -->
+                        <svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.463 1.065 2.876 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <span id="txtWhatsappLabel">شماره واتس‌اپ</span>
+                    </label>
+                    <input type="tel" id="whatsappInput" placeholder="شماره خود را وارد کنید" maxlength="20" class="w-full px-4 py-3 rounded-xl bg-white/90 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-left" dir="ltr">
+                </div>
+
+                <!-- Instagram Requirement -->
+                <div class="bg-white/10 rounded-xl p-3 md:p-4 border border-white/10">
+                    <p id="lblInstaDesc" class="text-sm mb-2 md:mb-3 font-light">برای شرکت در قرعه‌کشی، ابتدا پیج ما را فالو کنید:</p>
+                    
+                    <a id="btnInstaLink" href="https://instagram.com" target="_blank" onclick="showFollowCheckbox()" class="flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-2 px-4 rounded-lg mb-2 transition shadow-lg cursor-pointer">
+                        <svg class="w-5 h-5 mx-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        <span id="txtInstaBtn">فالو کردن در اینستاگرام</span>
+                    </a>
+
+                    <!-- Follow Checkbox Container (Initially Hidden) -->
+                    <div id="checkContainer" class="hidden items-center space-x-3 space-x-reverse bg-white/20 p-3 rounded-lg border border-white/20 shadow-inner">
+                        <label class="flex items-center gap-3 w-full cursor-pointer select-none">
+                            <input type="checkbox" id="checkFollowed" class="custom-checkbox text-green-500 rounded focus:ring-green-500 border-gray-300">
+                            <span id="lblFollowed" class="text-sm font-bold">بله، پیج را فالو کردم</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button id="btnEnter" onclick="unlockWheel()" class="w-full bg-green-500 hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-black text-xl py-3 rounded-xl shadow-lg transition transform active:scale-95" disabled>
+                ورود به بازی
+            </button>
+        </div>
+
+
+        <!-- SECTION 2: Wheel (Initially Hidden) -->
+        <div id="wheelSection" class="hidden flex-col items-center justify-center w-full space-y-4 md:space-y-8 animate-fade-in shrink-0">
+            <!-- Wheel Wrapper -->
+            <div class="relative group">
+                <!-- The Pointer -->
+                <div class="stopper"></div>
+                
+                <!-- The Wheel Border/Container -->
+                <div class="wheel-container">
+                    <canvas id="wheelCanvas" width="900" height="900"></canvas>
+                </div>
+
+                <!-- Center Decor -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-xl z-10 flex items-center justify-center border-4 border-yellow-400">
+                    <span class="text-xl md:text-2xl">🎁</span>
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <button id="spinBtn" onclick="spinWheel()" class="btn-primary px-10 py-3 md:px-12 md:py-4 rounded-full text-xl md:text-2xl font-bold text-red-900 border-b-0 border-white tracking-wide w-full max-w-xs md:max-w-none">
+                بچرخون!
+            </button>
+
+            <div id="resultText" class="h-6 md:h-8 text-white font-bold text-lg md:text-xl drop-shadow-md"></div>
+        </div>
+    </div>
+
+    <!-- Result Modal (Hidden by default) -->
+    <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center hidden backdrop-blur-sm px-4">
+        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-sm w-full text-center shadow-2xl border-4 border-yellow-400 transform transition-all scale-100 relative">
+            
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2">
+                <div class="w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+                    <span id="modalIcon" class="text-4xl">🎉</span>
+                </div>
+            </div>
+
+            <!-- Modal Content with Logo -->
+            <div class="mt-8 mb-2 flex flex-col items-center justify-center">
+                <img src="logo.png" alt="Logo" class="h-40 w-auto object-contain mb-2" onerror="this.style.display='none'">
+                <!-- No text title here either, as per instruction -->
+            </div>
+
+            <h2 id="modalTitle" class="text-2xl font-black text-purple-800 mb-2">نتیجه چرخش</h2>
+            <p id="modalMessage" class="text-gray-600 text-lg mb-6 font-medium">...</p>
+            
+            <button id="btnModalClose" onclick="closeModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-xl transition duration-200 shadow-md">
+                متوجه شدم
+            </button>
+
+            <!-- New Promo Text -->
+            <p id="modalPromo" class="mt-4 text-xs md:text-sm font-bold text-pink-600 px-2 leading-relaxed border-t border-gray-100 pt-3">
+                <!-- Promo Text Injected by JS -->
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // --- Translations ---
+        const translations = {
+            fa: {
+                subtitle: "گردونه شانس",
+                spinBtn: "بچرخون!",
+                spinning: "در حال چرخش...",
+                
+                // Gate Section
+                lblWhatsapp: "شماره واتس‌اپ",
+                lblInstaDesc: "برای شرکت در قرعه‌کشی، ابتدا پیج ما را فالو کنید:",
+                txtInstaBtn: "فالو کردن در اینستاگرام",
+                lblFollowed: "بله، پیج را فالو کردم",
+                btnEnter: "ورود به بازی",
+                placeholder_phone: "شماره خود را وارد کنید",
+
+                // Wheel Items
+                item_retry: "شانس دوباره",
+                item_discount_40: "تخفیف 40%",
+                item_gift: "هدیه کوچک\n(درصورت خرید)",
+                item_discount_20: "تخفیف 20%",
+                item_discount_30: "تخفیف 30%",
+                item_discount_10: "تخفیف 10%",
+                item_sad: "پوچ",
+                item_special: "باکس ویژه",
+
+                // Modal
+                modalTitle: "نتیجه چرخش",
+                modalBtn: "باشه",
+                msg_special: "باورنکردنیه! شما برنده {label} شدید!",
+                msg_discount: "تبریک! شما برنده {label} روی خرید بعدی شدید.",
+                msg_gift: "عالیه! یه {label} به سبد خریدت اضافه شد.",
+                msg_retry: "اشکال نداره، دوباره تلاش کن!",
+                msg_sad: "پوچ! متاسفانه این بار برنده نشدی.",
+
+                // New Promo
+                modalPromo: "در صورتی که از همین صفحه اسکرین شات بگیری و استوری کنی و پیج ما (tastyjoyz@) رو تگ کنی 20% تخفیف روی خرید بعدیت می گیری."
+            },
+            en: {
+                subtitle: "Lucky Wheel",
+                spinBtn: "Spin It!",
+                spinning: "Spinning...",
+                
+                lblWhatsapp: "WhatsApp Number",
+                lblInstaDesc: "To participate, first follow our page:",
+                txtInstaBtn: "Follow on Instagram",
+                lblFollowed: "Yes, I have followed",
+                btnEnter: "Enter Game",
+                placeholder_phone: "Enter your number",
+
+                item_retry: "Spin Again",
+                item_discount_40: "40% OFF",
+                item_gift: "Small Gift\n(w/ purchase)",
+                item_discount_20: "20% OFF",
+                item_discount_30: "30% OFF",
+                item_discount_10: "10% OFF",
+                item_sad: "Nothing",
+                item_special: "Special Box",
+
+                modalTitle: "Result",
+                modalBtn: "Got it",
+                msg_special: "Unbelievable! You won {label}!",
+                msg_discount: "Congrats! You won {label} on next purchase.",
+                msg_gift: "Great! A {label} added to your cart.",
+                msg_retry: "No worries, try again!",
+                msg_sad: "Oh no! Better luck next time.",
+                
+                modalPromo: "Screenshot this page, story it & tag us (@tastyjoyz) to get 20% OFF your next purchase!"
+            },
+            ar: {
+                subtitle: "عجلة الحظ",
+                spinBtn: "در العجلة!",
+                spinning: "جاري التدوير...",
+                
+                lblWhatsapp: "رقم الواتساب",
+                lblInstaDesc: "للمشاركة، تابع صفحتنا أولاً:",
+                txtInstaBtn: "متابعة على انستغرام",
+                lblFollowed: "نعم، لقد تابعت الصفحة",
+                btnEnter: "دخول اللعبة",
+                placeholder_phone: "أدخل رقمك",
+
+                item_retry: "حاول مرة أخرى",
+                item_discount_40: "خصم 40٪",
+                item_gift: "هدية صغيرة\n(عند الشراء)",
+                item_discount_20: "خصم 20٪",
+                item_discount_30: "خصم 30٪",
+                item_discount_10: "خصم 10٪",
+                item_sad: "لا شيء",
+                item_special: "صندوق خاص",
+
+                modalTitle: "النتيجة",
+                modalBtn: "حسناً",
+                msg_special: "لا يصدق! لقد ربحت {label}!",
+                msg_discount: "مبروك! ربحت {label} لشرائك القادم.",
+                msg_gift: "رائع! تمت إضافة {label} إلى سلة التسوق.",
+                msg_retry: "لا بأس، حاول مرة أخرى!",
+                msg_sad: "للأسف! حظ أوفر في المرة القادمة.",
+
+                modalPromo: "التقط صورة للشاشة، انشرها في قصتك وأشر إلينا (tastyjoyz@) لتحصل على خصم 20٪!"
+            }
+        };
+
+        let currentLang = 'fa';
+        let currentResultType = ''; // Store the type of the last result
+
+        // --- Elements ---
+        const canvas = document.getElementById('wheelCanvas');
+        const ctx = canvas.getContext('2d');
+        const spinBtn = document.getElementById('spinBtn');
+        const resultText = document.getElementById('resultText');
+        
+        // Gate Elements
+        const gateSection = document.getElementById('gateSection');
+        const wheelSection = document.getElementById('wheelSection');
+        const whatsappInput = document.getElementById('whatsappInput');
+        const checkFollowed = document.getElementById('checkFollowed');
+        const checkContainer = document.getElementById('checkContainer');
+        const btnEnter = document.getElementById('btnEnter');
+
+        // Modal Elements
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBtn = document.getElementById('btnModalClose');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalPromo = document.getElementById('modalPromo');
+
+        // --- Wheel Config ---
+        // Weights updated as per user request
+        const wheelData = [
+            { id: 'item_retry', color: '#3b82f6', text: '#fff', weight: 10, type: 'retry' },
+            { id: 'item_discount_40', color: '#ef4444', text: '#fff', weight: 2, type: 'discount' },
+            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
+            { id: 'item_discount_20', color: '#f59e0b', text: '#fff', weight: 20, type: 'discount' },
+            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' },
+            { id: 'item_discount_10', color: '#f59e0b', text: '#fff', weight: 40, type: 'discount' },
+            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
+            { id: 'item_retry', color: '#3b82f6', text: '#fff', weight: 10, type: 'retry' },
+            { id: 'item_discount_20', color: '#f59e0b', text: '#fff', weight: 20, type: 'discount' },
+            { id: 'item_special', color: '#8b5cf6', text: '#fff', weight: 1, type: 'special' }, // Kept low
+            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
+            { id: 'item_discount_30', color: '#f97316', text: '#fff', weight: 5, type: 'discount' }
+        ];
+
+        let arc = 2 * Math.PI / wheelData.length;
+        let currentRotation = 0;
+
+        // --- Logic: Show Checkbox ---
+        function showFollowCheckbox() {
+            // Show the checkbox container with animation
+            if (checkContainer.classList.contains('hidden')) {
+                checkContainer.classList.remove('hidden');
+                checkContainer.classList.add('flex', 'fade-in-up');
+            }
+        }
+
+        // --- Logic: Gate Validation ---
+        function checkGate() {
+            // Validate Phone: Allow +, numbers, spaces. 
+            // Constraint: Min 7 digits, Max 15 digits (International Standard)
+            const rawValue = whatsappInput.value.trim();
+            
+            // Remove all non-digit characters to count actual numbers
+            const digitCount = rawValue.replace(/\D/g, '').length;
+            
+            const isWhatsappValid = digitCount >= 7 && digitCount <= 15; 
+            const isFollowed = checkFollowed.checked;
+            
+            if (isWhatsappValid && isFollowed) {
+                btnEnter.disabled = false;
+            } else {
+                btnEnter.disabled = true;
+            }
+        }
+
+        whatsappInput.addEventListener('input', checkGate);
+        checkFollowed.addEventListener('change', checkGate);
+
+        function unlockWheel() {
+            // Hide gate, show wheel
+            gateSection.classList.add('hidden');
+            wheelSection.classList.remove('hidden');
+            wheelSection.classList.add('flex');
+            drawWheel(); // Ensure redraw
+        }
+
+        // --- Logic: Language Switch ---
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            const body = document.body;
+
+            // Direction & Font
+            if (lang === 'en') {
+                body.dir = 'ltr';
+                body.classList.add('lang-en');
+                whatsappInput.dir = 'ltr';
+                // LTR languages -> left align
+                whatsappInput.classList.remove('text-right');
+                whatsappInput.classList.add('text-left');
+            } else {
+                body.dir = 'rtl';
+                body.classList.remove('lang-en');
+                whatsappInput.dir = 'ltr'; // Phone numbers value always LTR logic
+                // RTL languages -> right align placeholder/text for better UI
+                whatsappInput.classList.remove('text-left');
+                whatsappInput.classList.add('text-right');
+            }
+            whatsappInput.placeholder = t.placeholder_phone;
+
+            // Update Text
+            // Removed Main Title Update
+            document.getElementById('subTitle').innerText = t.subtitle;
+            spinBtn.innerText = t.spinBtn;
+            
+            // Gate Text
+            document.getElementById('txtWhatsappLabel').innerText = t.lblWhatsapp;
+            document.getElementById('lblInstaDesc').innerText = t.lblInstaDesc;
+            document.getElementById('txtInstaBtn').innerText = t.txtInstaBtn;
+            document.getElementById('lblFollowed').innerText = t.lblFollowed;
+            document.getElementById('btnEnter').innerText = t.btnEnter;
+
+            // Modal Text
+            document.getElementById('modalTitle').innerText = t.modalTitle;
+            document.getElementById('btnModalClose').innerText = t.modalBtn;
+            modalPromo.innerText = t.modalPromo;
+
+            // Redraw Wheel
+            drawWheel();
+        }
+
+        // --- Logic: Wheel Drawing ---
+        function drawWheel() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = canvas.width / 2 - 10;
+            const t = translations[currentLang];
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            wheelData.forEach((item, i) => {
+                const angle = i * arc;
+                const label = t[item.id]; // Get translated label
+
+                // Draw Wedge
+                ctx.beginPath();
+                ctx.fillStyle = item.color;
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, angle, angle + arc);
+                ctx.lineTo(centerX, centerY);
+                ctx.fill();
+                ctx.strokeStyle = "#ffffff";
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Draw Text
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(angle + arc / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = item.text;
+                
+                // Adjust font size based on language and text length
+                if (currentLang === 'en') {
+                    ctx.font = "bold 30px Roboto, sans-serif"; 
+                } else {
+                    ctx.font = "bold 36px Vazirmatn, sans-serif";
+                }
+                
+                // Handle Multiline Text (e.g. Gift)
+                const lines = label.split('\n');
+                if (lines.length > 1) {
+                    ctx.fillText(lines[0], radius - 60, -5);
+                    ctx.font = currentLang === 'en' ? "bold 20px Roboto, sans-serif" : "bold 24px Vazirmatn, sans-serif";
+                    ctx.fillText(lines[1], radius - 60, 25);
+                } else {
+                    ctx.fillText(label, radius - 60, 15);
+                }
+
+                // Icons
+                let icon = '';
+                if(item.type === 'gift') icon = '🎁';
+                if(item.type === 'special') icon = '💎';
+                if(item.type === 'retry') icon = '🔄';
+                if(item.type === 'sad') icon = '☹️';
+                if(item.type === 'discount') icon = '%';
+                
+                // Using a standard font for icons to ensure emojis/symbols render consistently
+                ctx.font = "30px sans-serif";
+                ctx.fillText(icon, radius - 20, 10);
+                
+                ctx.restore();
+            });
+        }
+
+        function getWeightedRandomItem() {
+            let totalWeight = wheelData.reduce((sum, item) => sum + item.weight, 0);
+            let random = Math.random() * totalWeight;
+            
+            for (let i = 0; i < wheelData.length; i++) {
+                if (random < wheelData[i].weight) {
+                    return i;
+                }
+                random -= wheelData[i].weight;
+            }
+            return 0;
+        }
+
+        function spinWheel() {
+            if (spinBtn.disabled) return;
+            
+            const t = translations[currentLang];
+            spinBtn.disabled = true;
+            resultText.innerText = "";
+            spinBtn.innerText = t.spinning;
+
+            const winnerIndex = getWeightedRandomItem();
+            const winningItem = wheelData[winnerIndex];
+
+            const arcDeg = 360 / wheelData.length;
+            const jitter = Math.random() * (arcDeg - 4) - (arcDeg / 2 - 2); 
+            const targetRotationForIndex = 270 - (winnerIndex * arcDeg) - (arcDeg / 2) + jitter;
+            const extraSpins = 360 * (5 + Math.floor(Math.random() * 5));
+            
+            let newRotation = currentRotation + extraSpins + (targetRotationForIndex - (currentRotation % 360));
+            if (newRotation < currentRotation + 3600) newRotation += 360 * 10;
+
+            canvas.style.transform = `rotate(${newRotation}deg)`;
+            currentRotation = newRotation;
+
+            setTimeout(() => {
+                showResult(winningItem);
+                spinBtn.disabled = false;
+                spinBtn.innerText = t.spinBtn;
+            }, 5000);
+        }
+
+        function showResult(item) {
+            currentResultType = item.type; // Save the type to check in closeModal
+            const t = translations[currentLang];
+            const label = t[item.id].replace('\n', ' '); // Flatten label for sentence
+            
+            let msgTemplate = "";
+            let emoji = "";
+
+            switch(item.type) {
+                case 'special': msgTemplate = t.msg_special; emoji = "💎"; launchConfetti(); break;
+                case 'discount': msgTemplate = t.msg_discount; emoji = "🏷️"; launchConfetti(); break;
+                case 'gift': msgTemplate = t.msg_gift; emoji = "🎁"; launchConfetti(); break;
+                case 'retry': msgTemplate = t.msg_retry; emoji = "🔄"; break;
+                case 'sad': msgTemplate = t.msg_sad; emoji = "☹️"; break;
+            }
+
+            modalMessage.innerText = msgTemplate.replace('{label}', label);
+            modalIcon.innerText = emoji;
+            // Update promo text based on language
+            modalPromo.innerText = t.modalPromo;
+            
+            modalOverlay.classList.remove('hidden');
+            resultText.innerText = label;
+        }
+
+        function closeModal() {
+            modalOverlay.classList.add('hidden');
+            
+            // IF RETRY: Do NOT reset the game state. Let them spin again.
+            if (currentResultType === 'retry') {
+                return;
+            }
+
+            // RESET GAME STATE (Go back to gate)
+            // 1. Hide Wheel
+            wheelSection.classList.remove('flex');
+            wheelSection.classList.add('hidden');
+
+            // 2. Show Gate
+            gateSection.classList.remove('hidden');
+            
+            // 3. Reset Checkbox Logic
+            checkFollowed.checked = false;
+            checkContainer.classList.add('hidden');
+            checkContainer.classList.remove('flex');
+            btnEnter.disabled = true;
+
+            // 4. Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function launchConfetti() {
+            var duration = 3 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 60 };
+            function randomInRange(min, max) { return Math.random() * (max - min) + min; }
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+        }
+
+        // Init
+        // Ensure initial draw respects language (FA by default)
+        changeLanguage('fa');
+
+    </script>
+</body>
+</html>
