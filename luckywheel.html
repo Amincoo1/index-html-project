@@ -128,8 +128,8 @@
 
         /* Checkbox Custom Style */
         .custom-checkbox {
-            width: 1.25rem;
-            height: 1.25rem;
+            width: 1.5rem;
+            height: 1.5rem;
             cursor: pointer;
             accent-color: #10b981; /* Tailwind green-500 */
         }
@@ -173,7 +173,7 @@
         </div>
 
         <!-- SECTION 1: Verification Gate -->
-        <div id="gateSection" class="w-full glass-card rounded-2xl p-4 md:p-8 text-white space-y-4 md:space-y-6 transform transition-all duration-500 shrink-0">
+        <div id="gateSection" class="w-full glass-card rounded-2xl p-4 md:p-8 text-white space-y-4 md:space-y-6 transform transition-all duration-500 shrink-0 overflow-y-auto max-h-[60vh]">
             <div class="space-y-3 md:space-y-4">
                 <!-- WhatsApp Input -->
                 <div>
@@ -185,20 +185,20 @@
                     <input type="tel" id="whatsappInput" placeholder="شماره خود را وارد کنید" maxlength="20" class="w-full px-4 py-3 rounded-xl bg-white/90 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-left" dir="ltr">
                 </div>
 
-                <!-- Instagram Requirement -->
-                <div class="bg-white/10 rounded-xl p-3 md:p-4 border border-white/10">
-                    <p id="lblInstaDesc" class="text-sm mb-2 md:mb-3 font-light">برای شرکت در قرعه‌کشی، ابتدا پیج ما را فالو کنید:</p>
+                <!-- Instagram QR Code Requirement -->
+                <div class="bg-white/10 rounded-xl p-3 md:p-4 border border-white/10 flex flex-col items-center">
+                    <p id="lblInstaDesc" class="text-sm mb-3 font-light text-center w-full">برای شرکت در قرعه‌کشی، کد زیر را اسکن کنید:</p>
                     
-                    <a id="btnInstaLink" href="https://instagram.com" target="_blank" onclick="showFollowCheckbox()" class="flex items-center justify-center w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-2 px-4 rounded-lg mb-2 transition shadow-lg cursor-pointer">
-                        <svg class="w-5 h-5 mx-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        <span id="txtInstaBtn">فالو کردن در اینستاگرام</span>
-                    </a>
+                    <!-- QR Code Image -->
+                    <div class="bg-white p-2 rounded-lg mb-4 shadow-lg">
+                        <img src="qrcode.png" alt="Instagram QR Code" class="w-32 h-32 md:w-40 md:h-40 object-contain" onerror="this.src='https://placehold.co/150x150?text=QR+Code'">
+                    </div>
 
-                    <!-- Follow Checkbox Container (Initially Hidden) -->
-                    <div id="checkContainer" class="hidden items-center space-x-3 space-x-reverse bg-white/20 p-3 rounded-lg border border-white/20 shadow-inner">
+                    <!-- Follow Checkbox Container (Always Visible) -->
+                    <div id="checkContainer" class="flex items-center w-full bg-white/20 p-3 rounded-lg border border-white/20 shadow-inner hover:bg-white/30 transition-colors">
                         <label class="flex items-center gap-3 w-full cursor-pointer select-none">
-                            <input type="checkbox" id="checkFollowed" class="custom-checkbox text-green-500 rounded focus:ring-green-500 border-gray-300">
-                            <span id="lblFollowed" class="text-sm font-bold">بله، پیج را فالو کردم</span>
+                            <input type="checkbox" id="checkFollowed" class="custom-checkbox text-green-500 rounded focus:ring-green-500 border-gray-300 bg-white">
+                            <span id="lblFollowed" class="text-sm font-bold flex-1">بله، پیج را فالو کردم</span>
                         </label>
                     </div>
                 </div>
@@ -249,7 +249,7 @@
 
             <!-- Modal Content with Logo -->
             <div class="mt-8 mb-2 flex flex-col items-center justify-center">
-                <img src="logo.png" alt="Logo" class="h-40 w-auto object-contain mb-2" onerror="this.style.display='none'">
+                <img src="logo.png" alt="Logo" class="h-20 w-auto object-contain mb-2" onerror="this.style.display='none'">
                 <!-- No text title here either, as per instruction -->
             </div>
 
@@ -277,8 +277,7 @@
                 
                 // Gate Section
                 lblWhatsapp: "شماره واتس‌اپ",
-                lblInstaDesc: "برای شرکت در قرعه‌کشی، ابتدا پیج ما را فالو کنید:",
-                txtInstaBtn: "فالو کردن در اینستاگرام",
+                lblInstaDesc: "برای شرکت در قرعه‌کشی، کد زیر را اسکن کنید:",
                 lblFollowed: "بله، پیج را فالو کردم",
                 btnEnter: "ورود به بازی",
                 placeholder_phone: "شماره خود را وارد کنید",
@@ -303,7 +302,7 @@
                 msg_sad: "پوچ! متاسفانه این بار برنده نشدی.",
 
                 // New Promo
-                modalPromo: "در صورتی که از همین صفحه اسکرین شات بگیری و استوری کنی و پیج ما (tastyjoyz@) رو تگ کنی 20% تخفیف روی خرید بعدیت می گیری."
+                modalPromo: "در صورتی که از همین صفحه اسکرین شات بگیری و استوری کنی و پیج ما رو تگ کنی 20% تخفیف روی خرید بعدیت می گیری."
             },
             en: {
                 subtitle: "Lucky Wheel",
@@ -311,8 +310,7 @@
                 spinning: "Spinning...",
                 
                 lblWhatsapp: "WhatsApp Number",
-                lblInstaDesc: "To participate, first follow our page:",
-                txtInstaBtn: "Follow on Instagram",
+                lblInstaDesc: "To participate, scan the QR code to follow:",
                 lblFollowed: "Yes, I have followed",
                 btnEnter: "Enter Game",
                 placeholder_phone: "Enter your number",
@@ -334,7 +332,7 @@
                 msg_retry: "No worries, try again!",
                 msg_sad: "Oh no! Better luck next time.",
                 
-                modalPromo: "Screenshot this page, story it & tag us (@tastyjoyz) to get 20% OFF your next purchase!"
+                modalPromo: "Screenshot this page, story it & tag us to get 20% OFF your next purchase!"
             },
             ar: {
                 subtitle: "عجلة الحظ",
@@ -342,8 +340,7 @@
                 spinning: "جاري التدوير...",
                 
                 lblWhatsapp: "رقم الواتساب",
-                lblInstaDesc: "للمشاركة، تابع صفحتنا أولاً:",
-                txtInstaBtn: "متابعة على انستغرام",
+                lblInstaDesc: "للمشاركة، امسح الرمز الشريطي لمتابعتنا:",
                 lblFollowed: "نعم، لقد تابعت الصفحة",
                 btnEnter: "دخول اللعبة",
                 placeholder_phone: "أدخل رقمك",
@@ -365,7 +362,7 @@
                 msg_retry: "لا بأس، حاول مرة أخرى!",
                 msg_sad: "للأسف! حظ أوفر في المرة القادمة.",
 
-                modalPromo: "التقط صورة للشاشة، انشرها في قصتك وأشر إلينا (tastyjoyz@) لتحصل على خصم 20٪!"
+                modalPromo: "التقط صورة للشاشة، انشرها في قصتك وأشر إلينا لتحصل على خصم 20٪!"
             }
         };
 
@@ -413,15 +410,6 @@
 
         let arc = 2 * Math.PI / wheelData.length;
         let currentRotation = 0;
-
-        // --- Logic: Show Checkbox ---
-        function showFollowCheckbox() {
-            // Show the checkbox container with animation
-            if (checkContainer.classList.contains('hidden')) {
-                checkContainer.classList.remove('hidden');
-                checkContainer.classList.add('flex', 'fade-in-up');
-            }
-        }
 
         // --- Logic: Gate Validation ---
         function checkGate() {
@@ -478,14 +466,12 @@
             whatsappInput.placeholder = t.placeholder_phone;
 
             // Update Text
-            // Removed Main Title Update
             document.getElementById('subTitle').innerText = t.subtitle;
             spinBtn.innerText = t.spinBtn;
             
             // Gate Text
             document.getElementById('txtWhatsappLabel').innerText = t.lblWhatsapp;
             document.getElementById('lblInstaDesc').innerText = t.lblInstaDesc;
-            document.getElementById('txtInstaBtn').innerText = t.txtInstaBtn;
             document.getElementById('lblFollowed').innerText = t.lblFollowed;
             document.getElementById('btnEnter').innerText = t.btnEnter;
 
@@ -647,8 +633,7 @@
             
             // 3. Reset Checkbox Logic
             checkFollowed.checked = false;
-            checkContainer.classList.add('hidden');
-            checkContainer.classList.remove('flex');
+            // No longer hiding checkContainer as per new requirement
             btnEnter.disabled = true;
 
             // 4. Scroll to top
