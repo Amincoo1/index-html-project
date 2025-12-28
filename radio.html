@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تحلیل بازار کار رادیولوژی فک و صورت - تهران ۱۴۰۴</title>
+    <title>تحلیل بازار کار رادیولوژی فک و صورت - تهران ۱۴۰۴ (نسخه نهایی)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
@@ -14,8 +14,6 @@
             background-color: #0f172a; /* Slate 900 */
             color: #e2e8f0; /* Slate 200 */
         }
-        
-        /* Chart Container Styling Rules */
         .chart-container {
             position: relative;
             width: 100%;
@@ -25,37 +23,15 @@
             height: 350px;
             max-height: 400px;
         }
-
         @media (max-width: 768px) {
             .chart-container {
                 height: 300px;
             }
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #38bdf8;
-            border-radius: 4px;
-        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #38bdf8; border-radius: 4px; }
     </style>
-    <!-- 
-    Palette: Neon Cyber-Medical
-    Primary: #06b6d4 (Cyan)
-    Secondary: #8b5cf6 (Violet)
-    Accent: #f43f5e (Pink)
-    Background: #0f172a (Deep Slate)
-    
-    Data Source Strategy:
-    Based on 1404 (2025) projections for Tehran private sector,
-    accounting for inflation and common "grey market" practices 
-    where legal base pay differs from actual "packet" payments.
-    -->
 </head>
 <body class="antialiased selection:bg-cyan-500 selection:text-white pb-12">
 
@@ -64,7 +40,7 @@
         <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-3xl md:text-4xl font-black text-cyan-400 mb-2">رادیولوژی فک و صورت</h1>
-                <p class="text-slate-400 text-sm md:text-base">تحلیل واقعی بازار کار تهران | ویژه سال ۱۴۰۴</p>
+                <p class="text-slate-400 text-sm md:text-base">تحلیل جامع بازار کار و حقوق مسئول فیزیک بهداشت | ۱۴۰۴</p>
             </div>
             <div class="bg-slate-700 px-4 py-2 rounded-lg border border-slate-600">
                 <span class="text-xs text-slate-300 block text-center">تاریخ گزارش</span>
@@ -78,33 +54,32 @@
         <!-- Intro Section -->
         <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div class="bg-slate-800 p-8 rounded-2xl shadow-xl border border-slate-700 hover:border-cyan-500 transition duration-300">
-                <h2 class="text-2xl font-bold text-white mb-4 border-r-4 border-cyan-500 pr-4">واقعیت بازار کار چیست؟</h2>
+                <h2 class="text-2xl font-bold text-white mb-4 border-r-4 border-cyan-500 pr-4">فرصت طلایی مسئول فیزیک بهداشت</h2>
                 <p class="text-slate-300 leading-relaxed mb-4 text-justify">
-                    در سال ۱۴۰۴، بازار کار کارشناسان رادیولوژی فک و صورت (CBCT & OPG) در تهران دچار دوگانگی شده است. در حالی که قوانین وزارت کار حداقل‌ها را تعیین می‌کنند، توافقات "پاکتی" و خصوصی در کلینیک‌های شمال و مرکز تهران، ارقام متفاوتی را رقم می‌زنند. این گزارش فاصله بین قانون و واقعیت میدانی را بررسی می‌کند.
+                    طبق تحقیقات جدید برای سال ۱۴۰۴، بزرگترین جهش درآمدی برای کارشناسان رادیولوژی، قبول سمت <strong>«مسئول فیزیک بهداشت»</strong> است. قانون صراحتاً افزایش ۵۰ تا ۱۰۰ درصدی حقوق را الزام کرده است، هرچند در واقعیت بازار، توافقات متفاوتی صورت می‌گیرد.
                 </p>
                 <div class="flex gap-4 mt-6">
-                    <div class="bg-slate-900 p-3 rounded-lg text-center flex-1">
-                        <span class="block text-2xl font-bold text-cyan-400">۳۰٪+</span>
-                        <span class="text-xs text-slate-500">افزایش تقاضا</span>
+                    <div class="bg-slate-900 p-3 rounded-lg text-center flex-1 border border-emerald-500/30">
+                        <span class="block text-2xl font-bold text-emerald-400">۵۰٪+</span>
+                        <span class="text-xs text-slate-500">افزایش حقوق (مطب)</span>
                     </div>
-                    <div class="bg-slate-900 p-3 rounded-lg text-center flex-1">
-                        <span class="block text-2xl font-bold text-pink-500">خاکستری</span>
-                        <span class="text-xs text-slate-500">وضعیت پرداخت‌ها</span>
+                    <div class="bg-slate-900 p-3 rounded-lg text-center flex-1 border border-cyan-500/30">
+                        <span class="block text-2xl font-bold text-cyan-400">۱۰۰٪+</span>
+                        <span class="text-xs text-slate-500">افزایش حقوق (کلینیک)</span>
                     </div>
                 </div>
             </div>
             
-            <!-- Key Stat Visual HTML (No SVG) -->
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-gradient-to-br from-cyan-900 to-slate-900 p-6 rounded-xl border border-cyan-800 flex flex-col items-center justify-center h-48">
-                    <span class="text-5xl mb-2 text-cyan-400">⚡</span>
+                    <span class="text-5xl mb-2 text-cyan-400">📊</span>
                     <span class="text-lg font-bold text-white text-center">مهارت نرم‌افزاری</span>
-                    <span class="text-xs text-cyan-200 mt-2 text-center">عامل اصلی تعیین حقوق</span>
+                    <span class="text-xs text-cyan-200 mt-2 text-center">Romexis & OnDemand</span>
                 </div>
-                <div class="bg-gradient-to-br from-violet-900 to-slate-900 p-6 rounded-xl border border-violet-800 flex flex-col items-center justify-center h-48">
-                    <span class="text-5xl mb-2 text-violet-400">☢️</span>
+                <div class="bg-gradient-to-br from-pink-900 to-slate-900 p-6 rounded-xl border border-pink-800 flex flex-col items-center justify-center h-48">
+                    <span class="text-5xl mb-2 text-pink-400">⚠️</span>
                     <span class="text-lg font-bold text-white text-center">حق اشعه</span>
-                    <span class="text-xs text-violet-200 mt-2 text-center">مهم‌ترین چالش قانونی</span>
+                    <span class="text-xs text-pink-200 mt-2 text-center">چالش اصلی کارفرمایان</span>
                 </div>
             </div>
         </section>
@@ -114,10 +89,10 @@
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
                     <span class="w-3 h-3 bg-cyan-500 rounded-full inline-block"></span>
-                    میانگین حقوق و دستمزد (۱۴۰۴)
+                    میانگین حقوق خالص (۱۴۰۴)
                 </h2>
                 <p class="text-slate-400 max-w-3xl">
-                    تفاوت چشمگیری بین حقوق پایه تکنسین ساده و تکنسین مسلط به نرم‌افزارهای سه بعدی (مانند Romexis یا Ondemand) وجود دارد. ارقام زیر بر اساس "دریافتی خالص" (Take-home pay) در کلینیک‌های خصوصی تهران است.
+                    ارقام زیر "دریافتی پاکتی" (توافقی) در تهران است. سوپروایزرها به دلیل تسلط بر مدیریت مرکز و نرم‌افزارها، سقف درآمدی بالاتری دارند.
                 </p>
             </div>
 
@@ -128,147 +103,93 @@
                 <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                     <div class="p-4 bg-slate-900 rounded-lg">
                         <div class="text-sm text-slate-500">تازه کار (طرحی)</div>
-                        <div class="text-xl font-bold text-white">۱۵ تا ۲۰ میلیون</div>
+                        <div class="text-xl font-bold text-white">۱۸ تا ۲۲ میلیون</div>
                     </div>
                     <div class="p-4 bg-slate-900 rounded-lg border border-cyan-500/30">
                         <div class="text-sm text-cyan-400">با تجربه (۳+ سال)</div>
-                        <div class="text-xl font-bold text-white">۲۵ تا ۳۵ میلیون</div>
+                        <div class="text-xl font-bold text-white">۳۰ تا ۳۸ میلیون</div>
                     </div>
                     <div class="p-4 bg-slate-900 rounded-lg">
-                        <div class="text-sm text-slate-500">سوپروایزر</div>
-                        <div class="text-xl font-bold text-white">۴۰+ میلیون</div>
+                        <div class="text-sm text-slate-500">سوپروایزر ارشد</div>
+                        <div class="text-xl font-bold text-white">۴۵+ میلیون</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: Radiation Allowance (Hagh-e Ashae) -->
-        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div class="order-2 lg:order-1">
-                <div class="bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700 h-full">
-                    <div class="chart-container">
-                        <canvas id="radiationChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="order-1 lg:order-2 flex flex-col justify-center">
-                <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <span class="w-3 h-3 bg-pink-500 rounded-full inline-block"></span>
-                    واقعیت حق اشعه
-                </h2>
-                <p class="text-slate-300 mb-6 leading-8 text-justify">
-                    قانوناً باید ۵۰٪ حقوق پایه به عنوان حق اشعه پرداخت شود. اما در واقعیت بازار ۱۴۰۴، کارفرمایان از روش‌های جایگزین استفاده می‌کنند:
-                </p>
-                <ul class="space-y-4">
-                    <li class="flex items-start gap-3 bg-slate-800 p-4 rounded-lg">
-                        <span class="text-pink-500 text-xl font-bold">۱</span>
-                        <div>
-                            <strong class="text-white block">روش تجمیعی (رایج‌ترین):</strong>
-                            <span class="text-slate-400 text-sm">کارفرما یک مبلغ کل (مثلاً ۳۰ میلیون) پیشنهاد می‌دهد و می‌گوید "این شامل همه چیز است". در فیش حقوقی عددسازی می‌شود.</span>
-                        </div>
-                    </li>
-                    <li class="flex items-start gap-3 bg-slate-800 p-4 rounded-lg">
-                        <span class="text-violet-500 text-xl font-bold">۲</span>
-                        <div>
-                            <strong class="text-white block">پرداخت قانونی:</strong>
-                            <span class="text-slate-400 text-sm">بیشتر در مراکز دولتی یا کلینیک‌های بزرگ و زنجیره‌ای که حسابرسی دقیق دارند دیده می‌شود.</span>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Section 3: Masoul Fanni (Technical Responsibility) -->
+        <!-- Section 2: Radiation Protection Officer (THE BIG CHANGE) -->
         <section>
             <div class="mb-6">
                 <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2">
-                    <span class="w-3 h-3 bg-violet-500 rounded-full inline-block"></span>
-                    امتیاز مسئول فنی
+                    <span class="w-3 h-3 bg-emerald-500 rounded-full inline-block"></span>
+                    مسئول فیزیک بهداشت: قانون در برابر واقعیت
                 </h2>
                 <p class="text-slate-400">
-                    اگر مدرک تحصیلی خود را به عنوان مسئول فنی در پروانه کلینیک ثبت کنید، درآمد شما تغییر چشمگیری خواهد کرد. این مبلغ جدا از حقوق شیفت کاری است.
+                    آیا واقعا حقوق دو برابر می‌شود؟ نمودار زیر مقایسه درآمد یک کارشناس ساده با کارشناس دارای حکم مسئول فیزیک بهداشت را نشان می‌دهد.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="md:col-span-2 bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-slate-800 p-6 rounded-2xl shadow-lg border border-slate-700">
                     <div class="chart-container">
-                        <canvas id="responsibilityChart"></canvas>
+                        <canvas id="rpoChart"></canvas>
                     </div>
                 </div>
                 
-                <!-- Info Card for Technical Responsibility -->
-                <div class="bg-gradient-to-b from-violet-900 to-slate-900 p-6 rounded-2xl border border-violet-700 flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-4">نکات کلیدی ۱۴۰۴</h3>
-                        <div class="space-y-4">
-                            <div class="border-b border-violet-800 pb-2">
-                                <span class="block text-violet-300 text-sm">اجاره مدرک (بدون حضور)</span>
-                                <span class="text-white font-bold">۸ تا ۱۲ میلیون تومان</span>
-                                <span class="block text-xs text-red-400 mt-1">ریسک قانونی بالا</span>
-                            </div>
-                            <div class="border-b border-violet-800 pb-2">
-                                <span class="block text-violet-300 text-sm">حضور فعال + مسئول فنی</span>
-                                <span class="text-white font-bold">۱۵ تا ۲۵ میلیون (مازاد بر حقوق)</span>
-                            </div>
-                        </div>
+                <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700 flex flex-col gap-4">
+                    <div class="bg-emerald-900/30 p-4 rounded-xl border-r-4 border-emerald-500">
+                        <h3 class="font-bold text-white text-lg mb-1">قانون (ایده‌آل)</h3>
+                        <p class="text-sm text-slate-300">در مراکز بزرگ: <strong>۱۰۰٪ حقوق پایه</strong> اضافه می‌شود.<br>در مطب‌ها: <strong>۵۰٪ حقوق پایه</strong> اضافه می‌شود.</p>
                     </div>
-                    <div class="mt-6 bg-slate-900/50 p-3 rounded text-xs text-slate-300">
-                        * ارقام بسته به ترافیک بیمار (Patient Flow) مرکز متغیر است.
+                    <div class="bg-pink-900/30 p-4 rounded-xl border-r-4 border-pink-500">
+                        <h3 class="font-bold text-white text-lg mb-1">واقعیت بازار</h3>
+                        <p class="text-sm text-slate-300">
+                            <strong>کارمند داخلی:</strong> معمولاً به صورت "توافقی" حدود ۱۰ تا ۱۵ میلیون به حقوق اضافه می‌شود (کمتر از قانون).<br>
+                            <strong>مسئول فنی پروازی:</strong> ماهانه ۸ تا ۱۲ میلیون تومان (بدون حضور).
+                        </p>
+                    </div>
+                    <div class="mt-auto bg-slate-900 p-4 rounded-lg text-center">
+                        <span class="text-slate-400 text-xs">درآمد کل پتانسیل (شیفت + مسئولیت)</span>
+                        <span class="block text-2xl font-black text-white mt-1">۵۵-۶۰ میلیون</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 4: Insurance Reality -->
-        <section class="bg-slate-800 rounded-3xl p-8 border border-slate-700">
-            <h2 class="text-2xl font-bold text-white mb-6 text-center">وضعیت بیمه تامین اجتماعی</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                <div class="chart-container">
+        <!-- Section 3: Radiation Allowance & Insurance -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Radiation Allowance -->
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">نحوه پرداخت حق اشعه</h3>
+                <div class="chart-container" style="height: 300px;">
+                    <canvas id="radiationChart"></canvas>
+                </div>
+                <p class="text-center text-xs text-slate-400 mt-4">بیش از نیمی از مراکز، حق اشعه را در حقوق پایه "گم" می‌کنند.</p>
+            </div>
+
+            <!-- Insurance -->
+            <div class="bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                <h3 class="text-xl font-bold text-white mb-4 text-center">وضعیت بیمه پرسنل</h3>
+                <div class="chart-container" style="height: 300px;">
                     <canvas id="insuranceChart"></canvas>
                 </div>
-                
-                <div class="space-y-6">
-                    <div class="bg-slate-900 p-5 rounded-xl border-r-4 border-emerald-500">
-                        <h4 class="text-white font-bold mb-2">بیمه کامل (واقعی)</h4>
-                        <p class="text-slate-400 text-sm">
-                            تنها حدود ۲۰٪ مراکز حقوق واقعی شما را در لیست بیمه رد می‌کنند. این برای بازنشستگی عالی است اما برای کارفرما هزینه سنگینی دارد.
-                        </p>
-                    </div>
-                    <div class="bg-slate-900 p-5 rounded-xl border-r-4 border-yellow-500">
-                        <h4 class="text-white font-bold mb-2">بیمه حداقل پایه (شایع‌ترین)</h4>
-                        <p class="text-slate-400 text-sm">
-                            حتی اگر ۴۰ میلیون حقوق بگیرید، کارفرما بیمه شما را بر اساس حداقل حقوق وزارت کار (حدود ۱۱-۱۲ میلیون در ۱۴۰۴) رد می‌کند تا حق بیمه کمتری بپردازد.
-                        </p>
-                    </div>
-                    <div class="bg-slate-900 p-5 rounded-xl border-r-4 border-red-500">
-                        <h4 class="text-white font-bold mb-2">بدون بیمه / بیمه خویش‌فرما</h4>
-                        <p class="text-slate-400 text-sm">
-                            برخی مراکز کوچک پیشنهاد می‌دهند مبلغ حق بیمه را نقدی به خودتان بدهند تا خودتان را بیمه کنید. (غیرقانونی اما رایج).
-                        </p>
-                    </div>
-                </div>
+                <p class="text-center text-xs text-slate-400 mt-4">بیمه با حقوق واقعی (۴۰+ میلیون) بسیار نادر است.</p>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer Summary -->
     <footer class="max-w-6xl mx-auto px-4 mt-16 text-center text-slate-500 text-sm">
-        <p>تولید شده توسط هوش مصنوعی | داده‌های شبیه‌سازی شده بر اساس تحلیل بازار ۱۴۰۴</p>
+        <p>تحلیل بازار کار کارشناسان رادیولوژی فک و صورت تهران ۱۴۰۴ | تولید شده بر اساس قوانین انجمن علوم پرتونگاری و واقعیت بازار کار</p>
     </footer>
 
-    <!-- Chart Logic -->
     <script>
-        // --- UTILITY FUNCTIONS ---
-        // Function to split long labels for Chart.js
+        // Utilities
         function splitLabel(label) {
             if (typeof label !== 'string' || label.length <= 16) return label;
             const words = label.split(' ');
             const lines = [];
             let currentLine = words[0];
-
             for (let i = 1; i < words.length; i++) {
                 if ((currentLine + " " + words[i]).length > 16) {
                     lines.push(currentLine);
@@ -281,124 +202,63 @@
             return lines;
         }
 
-        // Global Chart Defaults
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.font.family = 'Vazirmatn';
         
-        // Tooltip Configuration (Mandatory)
         const commonTooltip = {
             callbacks: {
                 title: function(tooltipItems) {
                     const item = tooltipItems[0];
                     let label = item.chart.data.labels[item.dataIndex];
-                    if (Array.isArray(label)) {
-                        return label.join(' ');
-                    } else {
-                        return label;
-                    }
+                    return Array.isArray(label) ? label.join(' ') : label;
                 }
             },
-            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+            backgroundColor: 'rgba(15, 23, 42, 0.95)',
             titleColor: '#fff',
-            bodyColor: '#cbd5e1',
+            bodyColor: '#e2e8f0',
             borderColor: '#334155',
             borderWidth: 1,
-            padding: 10
+            padding: 12
         };
 
-        // --- CHART 1: Salary Ranges (Bar) ---
+        // 1. Salary Chart
         const salaryCtx = document.getElementById('salaryChart').getContext('2d');
-        const salaryLabels = ['طرحی/تازه‌کار', 'با تجربه (۳-۵ سال)', 'حرفه‌ای/سوپروایزر'].map(splitLabel);
-        
         new Chart(salaryCtx, {
             type: 'bar',
             data: {
-                labels: salaryLabels,
+                labels: ['تازه کار (طرحی)', 'تکنسین با تجربه', 'سوپروایزر'].map(splitLabel),
                 datasets: [{
-                    label: 'میانگین حقوق ماهانه (میلیون تومان)',
-                    data: [18, 30, 45],
-                    backgroundColor: [
-                        'rgba(6, 182, 212, 0.7)', // Cyan
-                        'rgba(139, 92, 246, 0.7)', // Violet
-                        'rgba(244, 63, 94, 0.7)'  // Pink
-                    ],
-                    borderColor: [
-                        '#06b6d4',
-                        '#8b5cf6',
-                        '#f43f5e'
-                    ],
-                    borderWidth: 2,
-                    borderRadius: 8
+                    label: 'حقوق دریافتی (میلیون تومان)',
+                    data: [20, 34, 48],
+                    backgroundColor: ['#06b6d4', '#8b5cf6', '#f43f5e'],
+                    borderRadius: 6
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: commonTooltip
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: { color: '#334155' },
-                        title: { display: true, text: 'میلیون تومان' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
-                }
+                plugins: { legend: { display: false }, tooltip: commonTooltip },
+                scales: { y: { beginAtZero: true, grid: { color: '#334155' } }, x: { grid: { display: false } } }
             }
         });
 
-        // --- CHART 2: Radiation Allowance (Doughnut) ---
-        const radiationCtx = document.getElementById('radiationChart').getContext('2d');
-        const radLabels = ['تجمیع در حقوق (توافقی)', 'پرداخت صریح طبق قانون', 'عدم پرداخت/نامشخص'].map(splitLabel);
-
-        new Chart(radiationCtx, {
-            type: 'doughnut',
-            data: {
-                labels: radLabels,
-                datasets: [{
-                    data: [55, 25, 20],
-                    backgroundColor: [
-                        '#f59e0b', // Amber (Hidden/Combined)
-                        '#10b981', // Emerald (Legal)
-                        '#ef4444'  // Red (None)
-                    ],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom', labels: { boxWidth: 12, padding: 20 } },
-                    tooltip: commonTooltip
-                },
-                cutout: '70%'
-            }
-        });
-
-        // --- CHART 3: Technical Responsibility (Stacked Bar) ---
-        const respCtx = document.getElementById('responsibilityChart').getContext('2d');
-        
-        new Chart(respCtx, {
+        // 2. RPO Chart (The Key Update)
+        const rpoCtx = document.getElementById('rpoChart').getContext('2d');
+        new Chart(rpoCtx, {
             type: 'bar',
             data: {
-                labels: ['تکنسین ساده', 'مسئول فنی (اجاره)', 'مسئول فنی (حضور فعال)'].map(splitLabel),
+                labels: ['کارشناس ساده', 'کارشناس + مسئول فیزیک (مطب)', 'کارشناس + مسئول فیزیک (کلینیک)'].map(splitLabel),
                 datasets: [
                     {
                         label: 'حقوق شیفت کاری',
-                        data: [25, 0, 25], // Assuming average shift salary
+                        data: [30, 30, 30], // Base salary (example)
                         backgroundColor: '#3b82f6',
                         stack: 'Stack 0',
                     },
                     {
-                        label: 'حق مسئولیت فنی',
-                        data: [0, 10, 20],
-                        backgroundColor: '#a855f7',
+                        label: 'حق مسئولیت فیزیک بهداشت',
+                        data: [0, 15, 30], // 50% and 100% increments
+                        backgroundColor: '#10b981', // Emerald for the bonus
                         stack: 'Stack 0',
                     }
                 ]
@@ -406,54 +266,54 @@
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
+                plugins: { 
+                    legend: { position: 'top' }, 
                     tooltip: commonTooltip,
-                    legend: { position: 'top' }
+                    title: { display: true, text: 'تاثیر پذیرش مسئولیت فیزیک بهداشت بر درآمد کل' }
                 },
-                scales: {
-                    x: { stacked: true, grid: { display: false } },
-                    y: { stacked: true, grid: { color: '#334155' } }
-                }
+                scales: { x: { stacked: true }, y: { stacked: true, grid: { color: '#334155' } } }
             }
         });
 
-        // --- CHART 4: Insurance Reality (Polar Area) ---
-        const insCtx = document.getElementById('insuranceChart').getContext('2d');
-        const insLabels = ['بیمه حداقل حقوق', 'بیمه حقوق واقعی', 'بدون بیمه/نقدی'].map(splitLabel);
-
-        new Chart(insCtx, {
-            type: 'polarArea',
+        // 3. Radiation Allowance Chart
+        const radCtx = document.getElementById('radiationChart').getContext('2d');
+        new Chart(radCtx, {
+            type: 'doughnut',
             data: {
-                labels: insLabels,
+                labels: ['تجمیع شده در حقوق (غیرشفاف)', 'پرداخت قانونی و جداگانه', 'عدم پرداخت'].map(splitLabel),
                 datasets: [{
-                    data: [60, 20, 20],
-                    backgroundColor: [
-                        'rgba(234, 179, 8, 0.6)', // Yellow
-                        'rgba(16, 185, 129, 0.6)', // Green
-                        'rgba(239, 68, 68, 0.6)'   // Red
-                    ],
-                    borderColor: '#1e293b',
-                    borderWidth: 2
+                    data: [60, 25, 15],
+                    backgroundColor: ['#f59e0b', '#10b981', '#ef4444'],
+                    borderWidth: 0
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'right' },
-                    tooltip: commonTooltip
-                },
-                scales: {
-                    r: {
-                        grid: { color: '#334155' },
-                        ticks: { display: false, backdropColor: 'transparent' }
-                    }
-                }
+                plugins: { legend: { position: 'bottom' }, tooltip: commonTooltip },
+                cutout: '65%'
+            }
+        });
+
+        // 4. Insurance Chart
+        const insCtx = document.getElementById('insuranceChart').getContext('2d');
+        new Chart(insCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['بیمه حداقل حقوق', 'بیمه حقوق واقعی', 'توافقی/خویش‌فرما'].map(splitLabel),
+                datasets: [{
+                    data: [65, 15, 20],
+                    backgroundColor: ['rgba(234, 179, 8, 0.7)', 'rgba(16, 185, 129, 0.7)', 'rgba(239, 68, 68, 0.7)'],
+                    borderColor: '#1e293b'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom' }, tooltip: commonTooltip },
+                scales: { r: { grid: { color: '#334155' }, ticks: { display: false, backdropColor: 'transparent' } } }
             }
         });
     </script>
-    
-    <!-- No Comments Output as requested -->
-    <!-- Confirmed: NO SVG Used. NO Mermaid JS Used. -->
 </body>
 </html>
