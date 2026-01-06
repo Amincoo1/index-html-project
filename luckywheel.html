@@ -284,13 +284,12 @@
 
                 // Wheel Items
                 item_retry: "شانس دوباره",
-                item_discount_40: "تخفیف 40%",
-                item_gift: "هدیه کوچک\n(درصورت خرید)",
-                item_discount_20: "تخفیف 20%",
-                item_discount_30: "تخفیف 30%",
-                item_discount_10: "تخفیف 10%",
+                item_discount_20_gift: "تخفیف ۲۰٪\n+ هدیه",
+                item_discount_40_gift: "۴۰٪ تخفیف\n+ هدیه",
+                item_gift: "هدیه کوچک",
                 item_sad: "پوچ",
-                item_special: "باکس ویژه",
+                item_special: "جایزه ویژه",
+                item_buy2get4: "۲ تا بخر\n۴ تا ببر",
 
                 // Modal
                 modalTitle: "نتیجه چرخش",
@@ -316,13 +315,12 @@
                 placeholder_phone: "Enter your number",
 
                 item_retry: "Spin Again",
-                item_discount_40: "40% OFF",
-                item_gift: "Small Gift\n(w/ purchase)",
-                item_discount_20: "20% OFF",
-                item_discount_30: "30% OFF",
-                item_discount_10: "10% OFF",
+                item_discount_20_gift: "20% OFF\n+ Gift",
+                item_discount_40_gift: "40% OFF\n+ Gift",
+                item_gift: "Small Gift",
                 item_sad: "Nothing",
-                item_special: "Special Box",
+                item_special: "Special Prize",
+                item_buy2get4: "Buy 2\nGet 4",
 
                 modalTitle: "Result",
                 modalBtn: "Got it",
@@ -346,13 +344,12 @@
                 placeholder_phone: "أدخل رقمك",
 
                 item_retry: "حاول مرة أخرى",
-                item_discount_40: "خصم 40٪",
-                item_gift: "هدية صغيرة\n(عند الشراء)",
-                item_discount_20: "خصم 20٪",
-                item_discount_30: "خصم 30٪",
-                item_discount_10: "خصم 10٪",
+                item_discount_20_gift: "خصم ٢٠٪\n+ هدية",
+                item_discount_40_gift: "خصم ٤٠٪\n+ هدية",
+                item_gift: "هدية صغيرة",
                 item_sad: "لا شيء",
-                item_special: "صندوق خاص",
+                item_special: "جائزة مميزة",
+                item_buy2get4: "اشتر ٢\nواحصل على ٤",
 
                 modalTitle: "النتيجة",
                 modalBtn: "حسناً",
@@ -392,20 +389,20 @@
         const modalPromo = document.getElementById('modalPromo');
 
         // --- Wheel Config ---
-        // Weights updated as per user request
+        // 12 Items total based on user request
         const wheelData = [
-            { id: 'item_retry', color: '#3b82f6', text: '#fff', weight: 10, type: 'retry' },
-            { id: 'item_discount_40', color: '#ef4444', text: '#fff', weight: 2, type: 'discount' },
-            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
-            { id: 'item_discount_20', color: '#f59e0b', text: '#fff', weight: 20, type: 'discount' },
-            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' },
-            { id: 'item_discount_10', color: '#f59e0b', text: '#fff', weight: 40, type: 'discount' },
-            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
-            { id: 'item_retry', color: '#3b82f6', text: '#fff', weight: 10, type: 'retry' },
-            { id: 'item_discount_20', color: '#f59e0b', text: '#fff', weight: 20, type: 'discount' },
-            { id: 'item_special', color: '#8b5cf6', text: '#fff', weight: 1, type: 'special' }, // Kept low
-            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 20, type: 'gift' },
-            { id: 'item_discount_30', color: '#f97316', text: '#fff', weight: 5, type: 'discount' }
+            { id: 'item_retry', color: '#3b82f6', text: '#fff', weight: 30, type: 'retry' }, // Blue
+            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' }, // Gray
+            { id: 'item_discount_20_gift', color: '#f59e0b', text: '#fff', weight: 15, type: 'discount' }, // Amber
+            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' }, // Gray
+            { id: 'item_buy2get4', color: '#ec4899', text: '#fff', weight: 0.5, type: 'discount' }, // Pink
+            { id: 'item_discount_40_gift', color: '#ef4444', text: '#fff', weight: 10, type: 'discount' }, // Red
+            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' }, // Gray
+            { id: 'item_discount_20_gift', color: '#f59e0b', text: '#fff', weight: 15, type: 'discount' }, // Amber
+            { id: 'item_sad', color: '#6b7280', text: '#fff', weight: 5, type: 'sad' }, // Gray
+            { id: 'item_buy2get4', color: '#ec4899', text: '#fff', weight: 0.5, type: 'discount' }, // Pink
+            { id: 'item_gift', color: '#10b981', text: '#fff', weight: 8, type: 'gift' }, // Green
+            { id: 'item_special', color: '#eab308', text: '#fff', weight: 1, type: 'special' } // Gold
         ];
 
         let arc = 2 * Math.PI / wheelData.length;
@@ -517,16 +514,16 @@
                 
                 // Adjust font size based on language and text length
                 if (currentLang === 'en') {
-                    ctx.font = "bold 30px Roboto, sans-serif"; 
+                    ctx.font = "bold 26px Roboto, sans-serif"; 
                 } else {
-                    ctx.font = "bold 36px Vazirmatn, sans-serif";
+                    ctx.font = "bold 30px Vazirmatn, sans-serif";
                 }
                 
                 // Handle Multiline Text (e.g. Gift)
                 const lines = label.split('\n');
                 if (lines.length > 1) {
                     ctx.fillText(lines[0], radius - 60, -5);
-                    ctx.font = currentLang === 'en' ? "bold 20px Roboto, sans-serif" : "bold 24px Vazirmatn, sans-serif";
+                    ctx.font = currentLang === 'en' ? "bold 18px Roboto, sans-serif" : "bold 22px Vazirmatn, sans-serif";
                     ctx.fillText(lines[1], radius - 60, 25);
                 } else {
                     ctx.fillText(label, radius - 60, 15);
